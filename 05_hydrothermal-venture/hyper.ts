@@ -27,10 +27,7 @@ function processFile(l: string) {
     const p2 = new Point(x2, y2)
     if ([p1.x, p1.y, p2.x, p2.y].some(n => n >= 1000))
         throw Error('Unexpected value')
-    if (p1.x <= p2.x)
-        lines.push([p1, p2])
-    else
-        lines.push([p2, p1])
+    lines.push([p1, p2])
 }
 
 function findLinesCrossings() {
@@ -43,6 +40,18 @@ function findLinesCrossings() {
         else if (p1.y === p2.y) {
             for (let i = Math.min(p1.x, p2.x); i <= Math.max(p1.x, p2.x); i++) {
                 map[i][p1.y] += 1
+            }
+        }
+        else {
+            // It's diagonal
+            let [start, end] = p1.x < p2.x ? [p1, p2] : [p2, p1]
+            const advanceJ = start.y < end.y
+                ? (j: number) => j += 1
+                : (j: number) => j -= 1
+
+            for (let [i, j] = [start.x, start.y]; i <= end.x; i++) {
+                map[i][j] += 1
+                j = advanceJ(j)
             }
         }
     }
