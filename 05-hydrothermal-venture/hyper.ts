@@ -1,5 +1,5 @@
 /*
- * Advent of code: Day 5: Hydrothermal Venture - Part 1
+ * Advent of code: Day 5: Hydrothermal Venture
  * https://adventofcode.com/2021/day/5
  */
 
