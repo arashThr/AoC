@@ -3,13 +3,21 @@
  * https://adventofcode.com/2021/day/N
  */
 
-import { readFile } from '../modules/fileReader'
+import { createReadStream } from 'fs'
+import { createInterface } from 'readline'
 
-readFile('./input_1.txt', processFile, findAnswer)
+let lines: number[][] = []
 
-function processFile(l: string) {
+function processLine(l: string) {
 }
 
 function findAnswer() {
 }
+
+const filePath = process.argv[2] ? './sample.txt' :'./input.txt'
+const rl = createInterface({
+    input: createReadStream(filePath)
+})
+.on('line', processLine)
+.on('close', findAnswer)
 
