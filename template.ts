@@ -5,8 +5,9 @@
 
 import { createReadStream } from 'fs'
 import { createInterface } from 'readline'
+import { strict as assert } from 'assert'
 
-let lines: number[][] = []
+let lines: string[] = []
 
 function processLine(l: string) {
 }
