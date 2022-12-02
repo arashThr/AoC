@@ -1,5 +1,5 @@
 /*
- * Advent of code: Day N
+ * Advent of code: Day N - Part 1|2
  * https://adventofcode.com/2021/day/N
  */
 

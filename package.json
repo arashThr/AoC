@@ -1,0 +1,26 @@
+{
+  "name": "advent-of-code",
+  "version": "1.0.0",
+  "description": "Solutions to advent of code challenges",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/arashThr/AoC.git"
+  },
+  "keywords": [
+    "advent-of-code"
+  ],
+  "author": "Arash Taher",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arashThr/AoC/issues"
+  },
+  "homepage": "https://github.com/arashThr/AoC#readme",
+  "devDependencies": {
+    "@types/node": "^18.11.10",
+    "ts-node": "^10.9.1"
+  }
+}
