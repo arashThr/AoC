@@ -16,7 +16,7 @@ function findAnswer() {
 }
 
 const filePath = pathJoin(__dirname, process.argv[2])
-const rl = createInterface({
+createInterface({
     input: createReadStream(filePath)
 })
 .on('line', processLine)
