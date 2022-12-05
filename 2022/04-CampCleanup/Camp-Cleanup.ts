@@ -8,10 +8,16 @@ import { join as pathJoin } from 'path'
 
 let totalOverlap = 0
 
-function processLine(l: string) {
+type Location = {
+  start: number
+  end: number
+  diff: number
+}
+
+function processPart1(l: string) {
   const [firstRange, secondRange] = getRanges(l)
 
-  const [larger, smaller] = firstRange.len > secondRange.len
+  const [larger, smaller] = firstRange.diff > secondRange.diff
     ? [firstRange, secondRange]
     : [secondRange, firstRange]
 
@@ -19,25 +25,11 @@ function processLine(l: string) {
     totalOverlap += 1
 }
 
-class Location {
-  start: number
-  end: number
-
-  constructor(x: number, y: number) {
-    this.start = x
-    this.end = y
-  }
-
-  get len() {
-    return Math.abs(this.end - this.start)
-  }
-}
-
 function getRanges(l: string): [Location, Location] {
-  const [a, b, x, z] = l.split(',').flatMap(p => p.split('-')).map(Number)
+  const [a, b, x, y] = l.split(',').flatMap(p => p.split('-')).map(Number)
   return [
-    new Location(a, b),
-    new Location(x, z)
+    { start: a, end: b, diff: b - a },
+    { start: x, end: y, diff: y - x },
   ]
 }
 
@@ -45,10 +37,25 @@ function findAnswer() {
   console.log('Total number of overlaps: ' + totalOverlap)
 }
 
+function processPart2(l: string) {
+  const [firstRange, secondRange] = getRanges(l)
+
+  const combinLength = Math.max(firstRange.end, secondRange.end) - Math.min(firstRange.start, secondRange.start)
+  const hasOverlap = combinLength <= firstRange.diff + secondRange.diff
+
+  if (hasOverlap)
+    totalOverlap += 1
+}
+
 const filePath = pathJoin(__dirname, process.argv[2])
 createInterface({
     input: createReadStream(filePath)
 })
-.on('line', processLine)
+.on('line', processPart2)
 .on('close', findAnswer)
 
+/* 
+ * Answers
+ * Part 1: 466
+ * Part 2: 865
+ */

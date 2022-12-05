@@ -22,3 +22,9 @@ createInterface({
 .on('line', processLine)
 .on('close', findAnswer)
 
+/* 
+ * Answers
+ * Part 1: X
+ * Part 2: X
+ */
+
