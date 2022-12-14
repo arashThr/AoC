@@ -20,7 +20,12 @@
   },
   "homepage": "https://github.com/arashThr/AoC#readme",
   "devDependencies": {
+    "@types/jest": "^29.2.4",
     "@types/node": "^18.11.10",
+    "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "jest": "^29.3.1"
   }
 }
