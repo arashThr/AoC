@@ -30,22 +30,45 @@ function processLine(l: string) {
     }
 }
 
-let total = 0
 
 function findAnswer() {
     while (cwd.parent)
         cwd = cwd.parent
 
-    findTotal(cwd)
+    const total = findTotal(cwd)
     console.log(`Total: ${total}`)
+
+    const size = findDirToDel(cwd)
+    console.log('Size of dir to remove: ' + size)
+}
+
+function findDirToDel(cwd: Directory) {
+    const total = 70_000_000
+    const updateSize = 30_000_000
+
+    const free = total - cwd.size
+    const minSize = updateSize - free
+
+    return findDir(cwd, minSize, total)
+}
+
+function findDir(cwd: Directory, minSize: number, candidateSize: number): number {
+    if (cwd.size > minSize && cwd.size < candidateSize)
+        candidateSize = cwd.size
+    for (let ch of cwd.subDirs)
+        candidateSize = findDir(ch, minSize, candidateSize)
+    return candidateSize
 }
 
 function findTotal(dir: Directory) {
+    let total = 0
     if (dir.size <= 100000)
         total += dir.size
 
     for (let ch of dir.subDirs)
-        findTotal(ch)
+        total += findTotal(ch)
+
+    return total
 }
 
 function start() {
