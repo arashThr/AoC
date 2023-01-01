@@ -20,7 +20,7 @@ function processLine(l: string) {
     if (!readingMoves) {
         lines.push(l)
     } else {
-        moveCrates(cargo, l)
+        moveCrates(cargo, l, true)
     }
 }
 
@@ -49,7 +49,7 @@ function modelCrates(lines: string[]) {
     return cargo
 }
 
-function moveCrates(cargo: string[][], instruction: string) {
+function moveCrates(cargo: string[][], instruction: string, mover9001: boolean = false) {
     const match = instruction.match(/move (?<howMany>\d+) from (?<src>\d+) to (?<dest>\d+)/)
     if (!match)
         throw Error('Unexpected input')
@@ -58,10 +58,15 @@ function moveCrates(cargo: string[][], instruction: string) {
     const src = Number(match.groups?.src || 0) - 1
     const dest = Number(match.groups?.dest || 0) - 1
 
-    while(howMany--) {
-        const crate = cargo[src].pop()
-        if (!crate) throw Error('Crate not found')
-        cargo[dest].push(crate)
+    if (mover9001) {
+        const taken = cargo[src].splice(-howMany)
+        cargo[dest].push(...taken)
+    } else {
+        while(howMany--) {
+            const crate = cargo[src].pop()
+            if (!crate) throw Error('Crate not found')
+            cargo[dest].push(crate)
+        }
     }
 }
 
@@ -79,11 +84,4 @@ createInterface({
 })
 .on('line', processLine)
 .on('close', findAnswer)
-
-/* 
- * Answers
- * Part 1: X
- * Part 2: X
- */
-
 

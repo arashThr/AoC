@@ -4,7 +4,6 @@
 
 import { createReadStream } from 'fs'
 import { createInterface } from 'readline'
-import { strict as assert } from 'assert'
 import { join as pathJoin } from 'path'
 
 let lines: string[] = []
@@ -21,10 +20,4 @@ createInterface({
 })
 .on('line', processLine)
 .on('close', findAnswer)
-
-/* 
- * Answers
- * Part 1: X
- * Part 2: X
- */
 
