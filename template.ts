@@ -1,7 +1,3 @@
-/*
- * https://adventofcode.com/2022/day/N
- */
-
 import { createReadStream } from 'fs'
 import { createInterface } from 'readline'
 import { join as pathJoin } from 'path'
