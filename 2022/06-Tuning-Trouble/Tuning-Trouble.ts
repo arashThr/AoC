@@ -5,10 +5,11 @@ import { join as pathJoin } from 'path'
 function processLine(l: string) {
     const chars = l.split('')
 
-    for (let i = 0; i <= l.length - 4; i++) {
-        const chunk = chars.slice(i, i + 4)
+    const markerLen = 14
+    for (let i = 0; i <= l.length - markerLen; i++) {
+        const chunk = chars.slice(i, i + markerLen)
         if (isUnique(chunk)) {
-            console.log('Answer is: ' + (i + 4))
+            console.log('Answer is: ' + (i + markerLen))
             break
         }
     }
