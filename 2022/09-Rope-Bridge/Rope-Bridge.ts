@@ -19,7 +19,7 @@ type Position = {
     y: number
 }
 
-function findAnswer() {
+function solvePartOne() {
     const headPos: Position = { x: 0, y: 0 }
     const tailPos: Position = { x: 0, y: 0 }
     const visited = new Set<string>(['0,0'])
@@ -28,10 +28,7 @@ function findAnswer() {
         for (let i = 0; i < m.len; i++) {
             const prevPos = { x: headPos.x , y: headPos.y }
 
-            if (m.dir === 'U') headPos.y += 1
-            if (m.dir === 'D') headPos.y -= 1
-            if (m.dir === 'L') headPos.x -= 1
-            if (m.dir === 'R') headPos.x += 1
+            updateHead(headPos, m)
 
             if (areAdjecent(headPos, tailPos))
                 continue
@@ -43,6 +40,42 @@ function findAnswer() {
     }
 
     console.log(visited.size)
+}
+
+function solvePartTwo() {
+    const knots: Position[] = Array.from(new Array(10)).map(() => ({ x: 0, y: 0}))
+    const visited = new Set<string>(['0,0'])
+
+    for (let m of motions) {
+        for (let i = 0; i < m.len; i++) {
+            const head = knots[0]
+
+            updateHead(head, m)
+
+            for (let i = 1; i < knots.length; i++) {
+                moveKnots(knots[i-1], knots[i])
+            }
+
+            visited.add(`${knots.at(-1)!.x},${knots.at(-1)!.y}`)
+        }
+    }
+    console.log(visited.size)
+}
+
+function moveKnots(head: Position, tail: Position) {
+    if (areAdjecent(head, tail)) return
+
+    if (tail.x < head.x) tail.x += 1
+    if (tail.x > head.x) tail.x -= 1
+    if (tail.y < head.y) tail.y += 1
+    if (tail.y > head.y) tail.y -= 1
+}
+
+function updateHead(pos: Position, m: Motion) {
+    if (m.dir === 'U') pos.y += 1
+    if (m.dir === 'D') pos.y -= 1
+    if (m.dir === 'L') pos.x -= 1
+    if (m.dir === 'R') pos.x += 1
 }
 
 function areAdjecent(head: Position, tail: Position) {
@@ -57,5 +90,8 @@ createInterface({
     input: createReadStream(filePath)
 })
 .on('line', processLine)
-.on('close', findAnswer)
+.on('close', () => {
+    solvePartOne()
+    solvePartTwo()
+})
 
